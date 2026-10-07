@@ -18,3 +18,33 @@ dialog{width:min(100% - 24px,470px);padding:0;border:0;background:transparent}di
 #prescriptionPreviewDialog{width:min(calc(100% - 24px),1100px);max-width:1100px;max-height:calc(100dvh - 28px);overflow:auto;border-radius:24px}.prescription-preview-modal{padding:32px}.prescription-preview-modal .section-heading{align-items:center;margin-bottom:6px}.page-count{padding:7px 10px;border-radius:30px;background:var(--sage-soft);color:#49664e;font-size:11px;font-weight:800}.prescription-pages{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}.prescription-pages figure{margin:0;padding:12px;border:1px solid var(--line);border-radius:17px;background:#f8f5ef}.prescription-pages img{display:block;width:100%;border:1px solid #e1ddd5;background:#fff;box-shadow:0 8px 24px rgba(13,29,42,.08)}.prescription-pages figcaption{margin:10px 0;color:var(--muted);font-size:11px;font-weight:700}.download-page{display:block;padding:11px;border-radius:11px;background:var(--navy-950);color:#fff;text-align:center;text-decoration:none;font-size:12px;font-weight:800}
 @media(max-width:700px){#rxDialog,#prescriptionPreviewDialog{width:100%;max-width:none;height:100dvh;max-height:none;margin:0;border-radius:0}#rxDialog .modal-card,.prescription-preview-modal{min-height:100dvh;padding:26px 18px;border-radius:0}.rx-grid{grid-template-columns:1fr 1fr}.prescription-pages{grid-template-columns:1fr}.profile-logo-row{align-items:flex-start}}
 @media(max-width:430px){.rx-grid{grid-template-columns:1fr}.medicine-row{padding:18px 14px}}
+
+/* Account gates, usable forms and responsive clinical workspace. */
+[hidden]{display:none!important}
+button,a,input,select,textarea{touch-action:manipulation}
+button:disabled{opacity:.55;cursor:wait}
+.form-message{color:#953e3e;font-size:13px;line-height:1.55;white-space:pre-wrap}
+.form-message:empty{display:none}
+.empty-inline{padding:24px 10px;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
+.empty-inline h3{color:var(--ink);margin:0 0 8px}
+.calendar-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0}
+.calendar-controls label{display:grid;gap:5px;font-size:11px;color:var(--muted)}
+.calendar-controls input{max-width:100%;min-width:0;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--white);color:var(--ink);font:inherit}
+.patient>div{flex:1;min-width:0}.patient b,.patient p,.appointment h3{overflow-wrap:anywhere}
+.patient .link-button{flex-shrink:0}
+#movementList,#prescriptionList{margin-top:20px}
+.whatsapp-action{width:auto;min-height:38px;height:auto;padding:8px 10px;border-radius:12px;font-size:11px;font-weight:700}
+.status{background:var(--sage-soft);color:var(--ink)}
+.appointment .text-button{margin:6px 0 0;min-height:36px}
+.close,.remove-medicine{min-width:44px;min-height:44px;z-index:2}
+#remindersDialog{width:min(calc(100% - 24px),650px)}
+#reminderList{margin-top:20px}
+.auth-card{display:flex;flex-direction:column;justify-content:center}
+.auth-card input,.auth-card select{font-size:16px}
+#authDialog:modal{overscroll-behavior:contain}
+@media(max-width:760px){
+  #authDialog .auth-stage{background:transparent;padding:20px 14px;display:flex;min-height:100dvh;align-items:center;justify-content:center}
+  #authDialog{background:linear-gradient(rgba(13,29,42,.7),rgba(13,29,42,.85)),url('assets/nexocare-clinical-background.png') center/cover no-repeat!important}
+  #authDialog .auth-card{min-height:0;max-width:500px;padding:28px 22px;border-radius:24px;background:rgba(255,253,249,.97)}
+  .modal-card input,.modal-card textarea,.modal-card select{font-size:16px}
+}

@@ -1,17 +1,23 @@
 # NexoCare
 
-Agenda clínica responsive para profesionales de salud. El prototipo incluye agenda diaria, pacientes, recetas y resumen financiero, con UX para escritorio y teléfono.
+Agenda y gestión de consulta para profesionales de salud: pacientes, citas, recetarios PNG de dos páginas e ingresos/egresos.
 
-## Integraciones preparadas
+## Estado de esta revisión
+La rama incorpora Supabase Auth y persistencia por usuario. Requiere un proyecto propio antes de publicar. No utiliza datos de ejemplo ni autenticación simulada.
 
-- **Supabase**: `supabase/migrations/001_initial_schema.sql` crea perfiles, pacientes, citas, recetas y movimientos, con RLS por médico.
-- **Recordatorios**: `supabase/functions/send-reminders` está preparado para ejecutarse cada día con Supabase Cron y encontrar citas a 24 h. Las notificaciones de WhatsApp requieren un proveedor aprobado (por ejemplo Meta WhatsApp Business/Twilio), una plantilla aprobada y consentimiento previo del paciente.
-- **Vercel**: `vercel.json` deja el sitio estático preparado para importar el repositorio y desplegarlo.
+1. Crear un proyecto Supabase independiente llamado NexoCare.
+2. Ejecutar supabase/migrations/002_real_accounts.sql en ese proyecto.
+3. Completar config.js con la URL y clave publishable/anon pública. Nunca usar service_role.
+4. Configurar la URL pública y las URLs autorizadas de confirmación en Supabase Auth.
+5. Comprobar registro y confirmación por correo, dos cuentas aisladas y recarga de datos.
+6. Revisar el despliegue previo y aprobar antes de actualizar producción.
 
-## Publicación
+El frontend usa scripts estáticos y supabase-js desde jsDelivr. No hay compilación ni variables VITE procesadas.
+Vercel sirve la raíz del repositorio.
 
-1. Crea un proyecto de Supabase y ejecuta la migración en SQL Editor o mediante Supabase CLI.
-2. Crea las variables de Vercel `VITE_SUPABASE_URL` y `VITE_SUPABASE_PUBLISHABLE_KEY`. Nunca uses `service_role` en el navegador.
-3. Sube este directorio a un repositorio GitHub y en Vercel usa **Add New > Project > Import Git Repository**.
+## Verificación
+node --test tests/domain.test.cjs
 
-El HTML funciona como demo local sin dependencias. En la siguiente iteración, conecta los formularios de `app.js` a Supabase Auth y a las tablas para persistencia multiusuario.
+Consultar AUDIT-2026-10-07.md para el alcance, los resultados y las limitaciones.
+Los recordatorios al doctor funcionan dentro de la app; los mensajes de WhatsApp se revisan y envían manualmente.
+El código conserva los datos antiguos del prototipo local, salvo su contraseña en texto, y no los importa a ninguna cuenta automáticamente.
