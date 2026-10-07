@@ -264,7 +264,7 @@ async function previewPrescription(data) {
   $('#rxDialog').close();$('#prescriptionPreviewDialog').showModal();
 }
 function addMedicineRow() {
-  if ($('.medicine-row').length >= 5) return toast('El formato de dos hojas admite hasta cinco medicamentos.');
+  if ($$('.medicine-row').length >= 5) return toast('El formato de dos hojas admite hasta cinco medicamentos.');
   const template = $('#medicineRowTemplate');
   const clone = template.content.cloneNode(true);
   $('#medicineRows').appendChild(clone);

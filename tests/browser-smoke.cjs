@@ -163,6 +163,7 @@ const mock = '('+function(){
     assert.deepEqual(errors,[]);
     fs.writeFileSync('test-results/result.json',JSON.stringify({status:'PASS',mode:'Mock Supabase; not real Auth/RLS verification',checks:['login first','empty signup','safe patient text','appointments by date','finance persistence','reload','two-page PNG','close buttons','wrong-password rejection','second-account isolation','390px layout'],errors},null,2));
   }catch(error){
+    console.error('Browser errors:',JSON.stringify(errors));
     await page.screenshot({path:'test-results/failure.png',fullPage:true});
     throw error;
   }finally {await browser.close();await new Promise(resolve=>server.close(resolve));}
