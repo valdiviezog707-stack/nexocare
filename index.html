@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#102F47" />
+    <meta name="description" content="NexoCare: agenda clínica inteligente para profesionales de salud." />
+    <title>NexoCare — Tu consulta, en sintonía</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#inicio" aria-label="NexoCare inicio"><span class="brand-mark">N</span><span>Nexo<span>Care</span></span></a>
+        <div class="top-actions"><button class="icon-btn" aria-label="Notificaciones">⌁<i></i></button><button class="avatar" aria-label="Abrir perfil">DV</button></div>
+      </header>
+
+      <section id="inicio" class="home-view view active">
+        <div class="welcome"><div><p class="eyebrow">MIÉRCOLES, 7 DE OCTUBRE</p><h1>Buenos días, <em>Daniela.</em></h1><p class="subtle">Tienes <strong>5 consultas</strong> programadas para hoy.</p></div><button class="soft-button" id="todayButton">Hoy <span>⌄</span></button></div>
+        <div class="metrics"><article><span class="metric-icon mint">◷</span><div><b>5</b><small>citas hoy</small></div></article><article><span class="metric-icon lilac">✓</span><div><b>3</b><small>confirmadas</small></div></article><article><span class="metric-icon peach">$</span><div><b>$480</b><small>proyección</small></div></article></div>
+        <section class="schedule-section"><div class="section-heading"><div><p class="eyebrow">AGENDA</p><h2>Tu día, de un vistazo</h2></div><button class="link-button" id="newAppointment">+ Nueva cita</button></div>
+          <div class="day-strip" role="tablist" aria-label="Seleccionar día"><button>Lu <b>5</b></button><button>Ma <b>6</b></button><button class="selected" aria-selected="true">Mi <b>7</b></button><button>Ju <b>8</b></button><button>Vi <b>9</b></button><button>Sa <b>10</b></button><button>Do <b>11</b></button></div>
+          <div class="appointment-list" id="appointmentList"></div>
+        </section>
+      </section>
+
+      <section id="pacientes" class="view"><div class="section-heading"><div><p class="eyebrow">DIRECTORIO</p><h1>Pacientes</h1></div><button class="link-button" id="addPatientTop">+ Nuevo</button></div><label class="search"><span>⌕</span><input id="patientSearch" placeholder="Buscar por nombre o teléfono" /></label><div id="patientList" class="patient-list"></div></section>
+      <section id="recetas" class="view"><div class="section-heading"><div><p class="eyebrow">PRESCRIPCIONES</p><h1>Recetas médicas</h1></div><button class="link-button" id="newPrescription">+ Crear receta</button></div><div class="empty-state"><div class="rx-symbol">℞</div><h2>Recetas claras, en segundos.</h2><p>Usa tu membrete profesional y completa las indicaciones para cada paciente.</p><button class="primary-button" id="newPrescription2">Crear una receta</button></div></section>
+      <section id="finanzas" class="view"><div><p class="eyebrow">ADMINISTRACIÓN</p><h1>Salud financiera</h1><p class="subtle">Resumen de octubre</p></div><div class="balance-card"><p>Balance estimado</p><b>$3,240.00</b><span>↑ 12% vs. septiembre</span></div><div class="finance-grid"><article><p>Ingresos</p><b>$4,520</b><small>18 cobros registrados</small></article><article><p>Egresos</p><b>$1,280</b><small>6 movimientos registrados</small></article></div></section>
+    </main>
+    <nav class="bottom-nav" aria-label="Navegación principal"><button class="nav-item active" data-view="inicio"><span>⌂</span>Inicio</button><button class="nav-item" data-view="pacientes"><span>♙</span>Pacientes</button><button class="quick-add" id="quickAdd" aria-label="Agregar paciente">+</button><button class="nav-item" data-view="recetas"><span>℞</span>Recetas</button><button class="nav-item" data-view="finanzas"><span>▥</span>Gestión</button></nav>
+    <dialog id="patientDialog"><form method="dialog" class="modal-card" id="patientForm"><button class="close" value="cancel" aria-label="Cerrar">×</button><p class="eyebrow">NUEVO PACIENTE</p><h2>Crear ficha de paciente</h2><label>Nombre completo<input name="name" required placeholder="Ej. María González" /></label><label>Teléfono / WhatsApp<input name="phone" required placeholder="+58 412 000 0000" /></label><label>Motivo de consulta<input name="reason" placeholder="Consulta general" /></label><button class="primary-button" value="default">Guardar paciente</button></form></dialog>
+    <dialog id="rxDialog"><form method="dialog" class="modal-card rx-form" id="rxForm"><button class="close" value="cancel" aria-label="Cerrar">×</button><p class="eyebrow">NUEVA PRESCRIPCIÓN</p><h2>Receta médica</h2><div class="doctor-stamp"><b>Dra. Daniela Valero</b><span>Medicina interna · CMP 125.486</span></div><label>Paciente<input name="patient" required placeholder="Nombre del paciente" /></label><label>Medicamento e indicaciones<textarea name="directions" required placeholder="Medicamento, dosis, vía, frecuencia y duración"></textarea></label><button class="primary-button" value="default">Generar receta</button></form></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
