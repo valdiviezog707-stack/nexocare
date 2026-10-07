@@ -37,7 +37,7 @@ html,body{width:100%;min-height:100%;overflow-x:hidden}.app-shell{width:100%;mar
 #authDialog{inset:0;width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:24px;background:radial-gradient(circle at 12% 12%,#415a77 0%,#172a3a 32%,#0d1d2a 76%);overflow:auto}
 #authDialog[open]{display:grid;place-items:center}#authDialog::backdrop{background:#0d1d2a}
 .auth-stage{display:grid;grid-template-columns:minmax(300px,.88fr) minmax(420px,1.12fr);width:min(100%,980px);margin:auto;border:1px solid rgba(244,237,224,.13);border-radius:30px;background:#fffdf9;box-shadow:0 35px 100px rgba(0,0,0,.32);overflow:hidden}
-.auth-visual{position:relative;display:flex;min-height:680px;flex-direction:column;justify-content:space-between;padding:48px;background:radial-gradient(circle at 30% 20%,rgba(126,157,122,.26),transparent 18rem),linear-gradient(150deg,#172a3a,#0d1d2a);color:#f4ede0;overflow:hidden}
+.auth-visual{position:relative;display:flex;min-height:680px;flex-direction:column;justify-content:space-between;padding:48px;background:linear-gradient(150deg,rgba(13,29,42,.82),rgba(13,29,42,.42)),url('assets/nexocare-clinical-background.png') center/cover no-repeat;color:#f4ede0;overflow:hidden}
 .auth-visual:before{content:'';position:absolute;inset:0;background:url('assets/nexocare-mark.png') 125% 105%/330px no-repeat;opacity:.06}.auth-visual>*{position:relative;z-index:1}
 .auth-visual .brand-mark{width:72px;height:72px;border-radius:20px}.auth-visual h3{max-width:310px;margin:0 0 16px;font-family:'Fraunces',serif;font-size:39px;line-height:1.05;letter-spacing:-1.3px}.auth-visual p{max-width:300px;margin:0;color:rgba(244,237,224,.72);font-size:13px;line-height:1.7}
 .auth-points{display:grid;gap:13px;margin-top:30px}.auth-points span{display:flex;align-items:center;gap:10px;color:#f4ede0;font-size:12px;font-weight:700}.auth-points i{display:grid;width:24px;height:24px;place-items:center;border-radius:50%;background:rgba(126,157,122,.2);color:#c4ac88;font-style:normal}
@@ -57,9 +57,9 @@ document.body.insertAdjacentHTML('beforeend', `
       </aside>
       <div class="modal-card auth-card">
         <div class="auth-brand"><img class="brand-mark" src="assets/nexocare-mark.png" alt="" /><b>Nexo<span>Care</span></b></div>
-        <p class="eyebrow">TU CONSULTA, EN SINTONÍA</p><h2 id="authTitle">Crea tu cuenta profesional</h2><p class="subtle" id="authCopy">Configura tu perfil y disfruta una agenda adaptada a tu especialidad.</p>
-        <form id="registerForm"><label>Nombre y apellido<input name="fullName" required placeholder="Dra. Daniela Valero" /></label><label>Especialidad<select name="specialty" required></select></label><label>Número de colegiado / licencia <span class="optional">(opcional)</span><input name="license" placeholder="Ej. CMP 125.486" /></label><label>Teléfono WhatsApp<input name="phone" required placeholder="+58 412 000 0000" /></label><label>Correo profesional<input name="email" required type="email" placeholder="tu@consultorio.com" /></label><label>Contraseña<input name="password" required minlength="8" type="password" placeholder="Mínimo 8 caracteres" /></label><button class="primary-button" type="submit">Crear cuenta y entrar</button><button class="text-button" type="button" id="showLogin">Ya tengo una cuenta</button></form>
-        <form id="loginForm" hidden><label>Correo profesional<input name="email" required type="email" placeholder="tu@consultorio.com" /></label><label>Contraseña<input name="password" required type="password" placeholder="Tu contraseña" /></label><button class="primary-button" type="submit">Entrar a NexoCare</button><button class="text-button" type="button" id="showRegister">Crear una cuenta profesional</button></form>
+        <p class="eyebrow">TU CONSULTA, EN SINTONÍA</p><h2 id="authTitle">Inicia sesión</h2><p class="subtle" id="authCopy">Accede a tu agenda, pacientes y recetario profesional.</p>
+        <form id="registerForm" hidden><label>Nombre y apellido<input name="fullName" required placeholder="Dra. Daniela Valero" /></label><label>Especialidad<select name="specialty" required></select></label><label>Número de colegiado / licencia <span class="optional">(opcional)</span><input name="license" placeholder="Ej. CMP 125.486" /></label><label>Teléfono WhatsApp<input name="phone" required placeholder="+58 412 000 0000" /></label><label>Correo profesional<input name="email" required type="email" placeholder="tu@consultorio.com" /></label><label>Contraseña<input name="password" required minlength="8" type="password" placeholder="Mínimo 8 caracteres" /></label><button class="primary-button" type="submit">Crear cuenta y entrar</button><button class="text-button" type="button" id="showLogin">Ya tengo una cuenta</button></form>
+        <form id="loginForm"><label>Correo profesional<input name="email" required type="email" placeholder="tu@consultorio.com" /></label><label>Contraseña<input name="password" required type="password" placeholder="Tu contraseña" /></label><button class="primary-button" type="submit">Entrar a NexoCare</button><button class="text-button" type="button" id="showRegister">Crear una cuenta profesional</button></form>
       </div>
     </div>
   </dialog>
@@ -451,4 +451,10 @@ $('#loginForm').addEventListener('submit', event => { event.preventDefault(); if
 $('#showLogin').addEventListener('click', () => { $('#registerForm').hidden = true; $('#loginForm').hidden = false; $('#authTitle').textContent = 'Bienvenido de nuevo'; $('#authCopy').textContent = 'Accede a tu agenda clínica y continúa donde lo dejaste.'; });
 $('#showRegister').addEventListener('click', () => { $('#registerForm').hidden = false; $('#loginForm').hidden = true; $('#authTitle').textContent = 'Crea tu cuenta profesional'; $('#authCopy').textContent = 'Configura tu perfil y disfruta una agenda adaptada a tu especialidad.'; });
 
-if (!getProfile()) $('#authDialog').showModal();
+if (!getProfile()) {
+  $('#registerForm').hidden = true;
+  $('#loginForm').hidden = false;
+  $('#authTitle').textContent = 'Inicia sesión';
+  $('#authCopy').textContent = 'Accede a tu agenda, pacientes y recetario profesional.';
+  $('#authDialog').showModal();
+}
