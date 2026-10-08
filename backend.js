@@ -35,7 +35,11 @@ window.NexoBackend = (() => {
   return {
     connect,load,save,session,
     login:async(email,password)=>check(await connect().auth.signInWithPassword({email,password})),
-    register:async(email,password,profile)=>check(await connect().auth.signUp({email,password,options:{data:profile}})),
+    register:async(email,password,profile)=>check(await connect().auth.signUp({
+      email,
+      password,
+      options:{data:profile,emailRedirectTo:window.location.origin}
+    })),
     logout:async()=>{ const r=await connect().auth.signOut(); if(r.error) throw r.error; },
     watch:fn=>connect().auth.onAuthStateChange(fn)
   };
