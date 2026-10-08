@@ -1,17 +1,29 @@
 # NexoCare
 
-Agenda clínica responsive para profesionales de salud. El prototipo incluye agenda diaria, pacientes, recetas y resumen financiero, con UX para escritorio y teléfono.
+Agenda y gestión de consulta para profesionales de salud: pacientes, citas, recetarios PNG de dos páginas e ingresos/egresos.
 
-## Integraciones preparadas
+## Estado de esta revisión
 
-- **Supabase**: `supabase/migrations/001_initial_schema.sql` crea perfiles, pacientes, citas, recetas y movimientos, con RLS por médico.
-- **Recordatorios**: `supabase/functions/send-reminders` está preparado para ejecutarse cada día con Supabase Cron y encontrar citas a 24 h. Las notificaciones de WhatsApp requieren un proveedor aprobado (por ejemplo Meta WhatsApp Business/Twilio), una plantilla aprobada y consentimiento previo del paciente.
-- **Vercel**: `vercel.json` deja el sitio estático preparado para importar el repositorio y desplegarlo.
+Esta rama está conectada al proyecto Supabase independiente NexoCare (`bzjbpoucyvipmgexvkfc`). El esquema, RLS y endurecimiento de seguridad ya fueron aplicados. No utiliza datos de ejemplo ni autenticación simulada.
 
-## Publicación
+- Cada profesional crea una cuenta real y sus datos comienzan en cero.
+- Pacientes, citas, movimientos y recetas quedan aislados por usuario mediante RLS.
+- El correo de confirmación vuelve al dominio activo de la aplicación.
+- Producción no se actualiza hasta que el preview sea revisado y aprobado.
 
-1. Crea un proyecto de Supabase y ejecuta la migración en SQL Editor o mediante Supabase CLI.
-2. Crea las variables de Vercel `VITE_SUPABASE_URL` y `VITE_SUPABASE_PUBLISHABLE_KEY`. Nunca uses `service_role` en el navegador.
-3. Sube este directorio a un repositorio GitHub y en Vercel usa **Add New > Project > Import Git Repository**.
+Antes de publicar, configura en **Supabase → Authentication → URL Configuration**:
 
-El HTML funciona como demo local sin dependencias. En la siguiente iteración, conecta los formularios de `app.js` a Supabase Auth y a las tablas para persistencia multiusuario.
+1. **Site URL:** `https://nexocare-psi.vercel.app`
+2. **Redirect URLs:** la URL de producción y los previews autorizados de NexoCare.
+
+El frontend usa scripts estáticos y supabase-js desde jsDelivr. No hay compilación ni variables VITE procesadas. Vercel sirve la raíz del repositorio.
+
+## Verificación
+
+```sh
+node --test tests/domain.test.cjs
+```
+
+Consultar `AUDIT-2026-10-07.md` para el alcance, los resultados y las limitaciones.
+Los recordatorios al doctor funcionan dentro de la app; los mensajes de WhatsApp se revisan y envían manualmente.
+El código conserva los datos antiguos del prototipo local, salvo su contraseña en texto, y no los importa a ninguna cuenta automáticamente.
