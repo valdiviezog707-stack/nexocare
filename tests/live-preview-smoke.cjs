@@ -10,6 +10,19 @@ const fs=require('node:fs');
   try {
     const response=await page.goto(preview,{waitUntil:'networkidle'});
     assert.ok(response && response.ok(),'Preview did not load');
+    fs.mkdirSync('test-results',{recursive:true});
+    if(await page.locator('#loginForm').count()===0) {
+      const body=(await page.locator('body').innerText()).slice(0,1000);
+      const protectedByVercel=/log in to vercel|continue with/i.test(body) || /vercel\.com\/login/i.test(page.url());
+      if(protectedByVercel) {
+        const result={status:'SKIP',reason:'VERCEL_AUTHENTICATION',preview};
+        fs.writeFileSync('test-results/live-preview-result.json',JSON.stringify(result,null,2));
+        await page.screenshot({path:'test-results/live-preview-protected.png',fullPage:true});
+        console.log(JSON.stringify(result));
+        return;
+      }
+      throw new Error('The preview loaded, but the NexoCare login form was not found.');
+    }
     const {expect}=require('@playwright/test');
     await expect(page.locator('#loginForm')).toBeVisible();
     const session=await page.evaluate(async()=>window.NexoBackend.session());
@@ -37,7 +50,6 @@ const fs=require('node:fs');
       await expect(page.locator('#authDialog')).not.toBeVisible();
     }
     assert.deepEqual(errors,[]);
-    fs.mkdirSync('test-results',{recursive:true});
     fs.writeFileSync('test-results/live-preview-result.json',JSON.stringify({status:'PASS',preview,email,mode,errors},null,2));
     await page.screenshot({path:'test-results/live-preview-mobile.png',fullPage:true});
     console.log(JSON.stringify({status:'PASS',email,mode}));
