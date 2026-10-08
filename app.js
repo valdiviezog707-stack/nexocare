@@ -579,7 +579,7 @@ $('#registerForm').addEventListener('submit',event=>{
     const result=await api.register(values.email.trim().toLowerCase(),values.password,profile);
     form.elements.password.value='';
     if(result.session) await enter(result.user);
-    else {authMode('login');$('#loginForm [name="email"]').value=values.email.trim();$('#authMessage').textContent='Revisa tu correo para confirmar la cuenta y luego inicia sesión. Si ya estabas registrado, utiliza tu contraseña.';}
+    else {authMode('login');$('#loginForm [name="email"]').value=values.email.trim();$('#authMessage').textContent='No se pudo abrir la sesión automáticamente. Verifica que “Confirm email” esté desactivado en Supabase y vuelve a intentar.';}
   });
 });
 $('#signOut').addEventListener('click',async()=>{
